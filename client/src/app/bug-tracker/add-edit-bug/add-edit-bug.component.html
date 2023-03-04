@@ -1,0 +1,60 @@
+<div class="content" role="main">
+        <h3 class="pb-2">{{pageTitle}}</h3>
+        <form (ngSubmit)="submit()" [formGroup]="bugForm">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label>Title</label>
+                        <input type="text" class="form-control" formControlName="title" placeholder="Title"
+                            [ngClass]="{ 'is-invalid': submitted && f['title'].errors }">
+                    </div>
+                    <div class="col-4">
+                        <label>Description</label>
+                        <input type="text" class="form-control" formControlName="description" placeholder="Description"
+                            
+                            [ngClass]="{ 'is-invalid': submitted && f['decription'].errors }">
+                    </div>
+                    <div class="col-4">
+                        <label>Reporter</label>
+                        <input type="reporter" class="form-control" formControlName="reporter" placeholder="Reporter"
+                            
+                            [ngClass]="{ 'is-invalid': submitted && f['reporter'].errors }">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label>Project</label>
+                        <input type="text" class="form-control" formControlName="project" placeholder="Project">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label>File URL</label>
+                        <div class="col-4">
+                            <input type="reporter" class="form-control" formControlName="fileURL" placeholder="File URL"
+                                
+                                [ngClass]="{ 'is-invalid': submitted && f['file URL'].errors }">
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <label>Due Date</label>
+                        <input type="text" class="form-control mb-3" placeholder="Due Date" bsDatepicker
+                            formControlName="dueDate"
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-blue' }" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="example-button-row rightAlign">
+                <button type="button" mat-raised-button (click)="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-primary submitButton" color="primary">{{submitOrUpdate}}</button>
+            </div>
+        </form>
+</div>

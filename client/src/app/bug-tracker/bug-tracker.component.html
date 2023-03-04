@@ -1,0 +1,110 @@
+<div class="content" role="main">
+    <div class="row">
+        <div class="col-6">
+        </div>
+        <div class="col-6 addBugButton">
+            <button type="button" class="btn btn-primary submitButton" (click)="addBug()">Add Bug</button>
+        </div>
+    </div>
+    <div class="table-responsive mt-40">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Sl.No</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Due date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="!errorOnFetchData&&!noData">
+
+                <tr *ngFor="let item of dataSource | paginate: { itemsPerPage: 10, currentPage: p }; let i = index ">
+                    <td scope="row">
+                        <label>{{i+1}}</label>
+                    </td>
+                    <td>
+                        <label>{{ item.title }}</label>
+                    </td>
+                    <td>{{ item.description }}</td>
+                    <td>{{item.due_date}}</td>
+                    <td>
+                        <div class="tb-action-box">
+                            <span class="fa fas fa-edit cursorCss" (click)="editBugPage(item._id)" tooltip="Edit Bug"
+                              placement="bottom"></span>
+                            <span class="fa fas fa-trash ml-3 cursorCss" (click)="openModal(template, item._id)" tooltip="Delete bug"
+                              placement="bottom"></span>
+                            <span class="fa fas fa-eye ml-3 cursorCss" (click)="openModalWithClass(templateOne,item._id)"
+                              tooltip="View Bug details" placement="bottom"></span>
+            
+            
+                          </div>
+                    </td>
+
+                    <ng-template #template>
+
+                        <div class="modal-body text-center">
+                            <p>Do you want to confirm?</p>
+                            <button type="button" class="btn btn-secondary mr-2" (click)="modalRef.hide()">No</button>
+                  <button type="button" class="btn btn-primary submitButton" (click)="deleteBug(item.id)">Yes</button>
+                        </div>
+                    </ng-template>
+
+                    <ng-template #templateOne>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Bug Details</h5>
+                            <button type="button" class="close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive mt-2">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Due Date</th>
+                                            <th scope="col">Project</th>
+                                            <th scope="col">Reporter</th>
+                                            <th scope="col">File URL</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody *ngIf="!errorOnFetchData">
+                                        <tr>
+                                            <td scope="row">{{ bugDetailsSet?.title }}</td>
+                                            <td scope="row">{{ bugDetailsSet?.description }}</td>
+                                            <td scope="row">{{bugDetailsSet?.due_date}}</td>
+                                            <td scope="row">{{ bugDetailsSet?.reporter }}</td>
+                                            <td scope="row">{{ bugDetailsSet?.project }}</td>
+                                            <td scope="row">{{ bugDetailsSet?.fileUrl }}</td>
+                
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+
+                        </div>
+                    </ng-template>
+                </tr>
+            </tbody>
+        </table>
+        <div><label *ngIf="noData" class="noDataDiv">No Data Available</label></div>
+    </div>
+    <div class="row">
+        <div class="col-12 errorFetch">
+            <label *ngIf="errorOnFetchData">Unable to Fetch Data</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <pagination-controls class="paginationAlign" *ngIf="!errorOnFetchData&&!noData" (pageChange)="p = $event">
+          </pagination-controls>
+
+        </div>
+    </div>
+</div>
